@@ -1,0 +1,36 @@
+type: google.api.Service
+config_version: 3
+http:
+  rules:
+    - selector: api.v1.BareksaNewsService.AddTag
+      post: /v1/tag
+      body: "*"
+    - selector: api.v1.BareksaNewsService.EditTag
+      put: /v1/tag/{id}
+      body: "*"
+    - selector: api.v1.BareksaNewsService.DeleteTag
+      delete: /v1/tag/{id}
+    - selector: api.v1.BareksaNewsService.GetTags
+      get: /v1/tags
+
+    - selector: api.v1.BareksaNewsService.AddTopic
+      post: /v1/topic
+      body: "*"
+    - selector: api.v1.BareksaNewsService.EditTopic
+      put: /v1/topic/{id}
+      body: "*"
+    - selector: api.v1.BareksaNewsService.DeleteTopic
+      delete: /v1/topic/{id}
+    - selector: api.v1.BareksaNewsService.GetTopics
+      get: /v1/topics
+
+    - selector: api.v1.BareksaNewsService.AddNews
+      post: /v1/news
+      body: "*"
+    - selector: api.v1.BareksaNewsService.EditNews
+      put: /v1/news/{id}
+      body: "*"
+    - selector: api.v1.BareksaNewsService.DeleteNews
+      delete: /v1/news/{id}
+    - selector: api.v1.BareksaNewsService.GetNewses
+      get: /v1/newses
