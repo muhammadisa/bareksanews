@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "378da56f-429a-413d-b38d-1d9ca65b9a99",
+		"name": "Bareksanews",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Tags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8010/v1/tags",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Tag",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tag\": \"health\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8010/v1/tag",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"tag"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Tag",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tag\": \"tech\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8010/v1/tag/c63b17cc-e227-4947-a01f-74f429ce99be",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"tag",
+						"c63b17cc-e227-4947-a01f-74f429ce99be"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Tag",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8010/v1/tag/0472d769-0360-4250-afc4-221b04ae5ae1",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"tag",
+						"0472d769-0360-4250-afc4-221b04ae5ae1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Topics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8010/v1/topics",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Topic",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"microservice\",\n    \"headline\": \"the popular style in this year\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8010/v1/topic",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Topic",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"microservice\",\n    \"headline\": \"is microservice better than monolith?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8010/v1/topic/d95cb090-0906-471a-80ef-3714c6451920",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"topic",
+						"d95cb090-0906-471a-80ef-3714c6451920"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Topic",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8010/v1/topic/561cbe1d-5a9d-4b83-8951-3dce026edf4e",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"topic",
+						"561cbe1d-5a9d-4b83-8951-3dce026edf4e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Newses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8010/v1/newses?topic_id=d95cb090-0906-471a-80ef-3714c6451920",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"newses"
+					],
+					"query": [
+						{
+							"key": "topic_id",
+							"value": "d95cb090-0906-471a-80ef-3714c6451920"
+						}
+					]
+				},
+				"description": "Status\n- 1 publish\n- 2 draft\n- 3 deleted\n\nQuery param\n- topic_id=d95cb090-0906-471a-80ef-3714c6451920\n- status=1"
+			},
+			"response": []
+		},
+		{
+			"name": "Add News",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"topic_id\": \"d95cb090-0906-471a-80ef-3714c6451920\",\n    \"title\": \"title news number 111\",\n    \"content\": \"content news 111\",\n    \"newsTagIds\": [\n        \"4e358682-e2b7-4ecf-9e1f-4373bffd661a\",\n        \"c63b17cc-e227-4947-a01f-74f429ce99be\"\n    ],\n    \"status\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8010/v1/news",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"news"
+					]
+				},
+				"description": "- 1 publish\n- 2 draft\n- 3 deleted"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit News",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"topic_id\": \"d95cb090-0906-471a-80ef-3714c6451920\",\n    \"title\": \"title news number 1\",\n    \"content\": \"content news 1\",\n    \"newsTagIds\": [\n        \"4e358682-e2b7-4ecf-9e1f-4373bffd661a\",\n        \"0f4e1e74-9238-4afb-87c2-108e569ff866\"\n    ],\n    \"status\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8010/v1/news/9366c83d-4c1e-40ab-93ca-30b9548aebf7",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"news",
+						"9366c83d-4c1e-40ab-93ca-30b9548aebf7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete News",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8010/v1/news/13487301-0e62-4104-808b-c8dfc4fbac40",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"v1",
+						"news",
+						"13487301-0e62-4104-808b-c8dfc4fbac40"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
