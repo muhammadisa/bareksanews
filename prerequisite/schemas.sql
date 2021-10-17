@@ -29,7 +29,7 @@ CREATE TABLE `news`
     `topic_id`   varchar(36)  NOT NULL,
     `title`      varchar(255) NOT NULL,
     `content`    varchar(255) NOT NULL,
-    `state`      int          not null,
+    `status`      int          not null,
     `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
