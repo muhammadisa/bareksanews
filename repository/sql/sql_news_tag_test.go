@@ -3,6 +3,7 @@ package sql
 import (
 	"context"
 	"errors"
+	"go.opencensus.io/trace"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -70,7 +71,7 @@ func (ts *sqlNewsTagTestSuite) TestReadNewsTagsTagIDAndTagByNewsID() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -137,7 +138,7 @@ func (ts *sqlNewsTagTestSuite) TestRemoveNewsTagsByNewsID() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()

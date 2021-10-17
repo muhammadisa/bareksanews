@@ -10,6 +10,10 @@ import (
 )
 
 func (s service) AddTopic(ctx context.Context, topic *pb.Topic) (*emptypb.Empty, error) {
+	const funcName = `AddTopic`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	topic.Id = uuid.NewV4().String()
 	newTopic, err := s.repo.ReadWriter.WriteTopic(ctx, topic)
 	if err != nil {
@@ -19,6 +23,10 @@ func (s service) AddTopic(ctx context.Context, topic *pb.Topic) (*emptypb.Empty,
 }
 
 func (s service) EditTopic(ctx context.Context, topic *pb.Topic) (res *emptypb.Empty, err error) {
+	const funcName = `EditTopic`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	err = s.repo.CacheReadWriter.UnsetTopic(ctx, topic.Id)
 	if err != nil {
 		return nil, err
@@ -31,6 +39,10 @@ func (s service) EditTopic(ctx context.Context, topic *pb.Topic) (res *emptypb.E
 }
 
 func (s service) DeleteTopic(ctx context.Context, selectTopic *pb.Select) (res *emptypb.Empty, err error) {
+	const funcName = `DeleteTopic`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	err = s.repo.ReadWriter.RemoveTopic(ctx, selectTopic)
 	if err != nil {
 		return nil, err
@@ -43,6 +55,10 @@ func (s service) DeleteTopic(ctx context.Context, selectTopic *pb.Select) (res *
 }
 
 func (s service) GetTopics(ctx context.Context, _ *emptypb.Empty) (res *pb.Topics, err error) {
+	const funcName = `GetTopics`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	res, err = s.repo.CacheReadWriter.GetTopics(ctx)
 	if err != nil {
 		return nil, err

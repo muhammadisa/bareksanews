@@ -11,6 +11,10 @@ import (
 )
 
 func (r *readWrite) WriteTag(ctx context.Context, req *pb.Tag) (res *pb.Tag, err error) {
+	const funcName = `WriteTag`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	currentTime := time.Now()
 	req.CreatedAt = currentTime.Unix()
 	req.UpdatedAt = currentTime.Unix()
@@ -35,6 +39,10 @@ func (r *readWrite) WriteTag(ctx context.Context, req *pb.Tag) (res *pb.Tag, err
 }
 
 func (r *readWrite) ModifyTag(ctx context.Context, req *pb.Tag) (res *pb.Tag, err error) {
+	const funcName = `ModifyTag`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var oldTag model.Tag
 
 	stmt, err := r.db.Prepare(queryLookupCreateAtTag)
@@ -75,6 +83,10 @@ func (r *readWrite) ModifyTag(ctx context.Context, req *pb.Tag) (res *pb.Tag, er
 }
 
 func (r *readWrite) RemoveTag(ctx context.Context, req *pb.Select) (err error) {
+	const funcName = `RemoveTag`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryRemoveTag)
 	if err != nil {
 		return err
@@ -93,6 +105,10 @@ func (r *readWrite) RemoveTag(ctx context.Context, req *pb.Select) (err error) {
 }
 
 func (r *readWrite) ReadTags(ctx context.Context) (res *pb.Tags, err error) {
+	const funcName = `ReadTags`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var tags pb.Tags
 	var tag model.Tag
 

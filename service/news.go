@@ -10,6 +10,10 @@ import (
 )
 
 func (s service) AddNews(ctx context.Context, news *pb.News) (res *emptypb.Empty, err error) {
+	const funcName = `AddNews`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	news.Id = uuid.NewV4().String()
 	newNews, err := s.repo.ReadWriter.WriteNews(ctx, news)
 	if err != nil {
@@ -24,6 +28,10 @@ func (s service) AddNews(ctx context.Context, news *pb.News) (res *emptypb.Empty
 }
 
 func (s service) EditNews(ctx context.Context, news *pb.News) (res *emptypb.Empty, err error) {
+	const funcName = `EditNews`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	_ = s.repo.CacheReadWriter.UnsetNews(ctx, news.Id)
 	oldNews, err := s.repo.ReadWriter.ModifyNews(ctx, news)
 	if err != nil {
@@ -37,6 +45,10 @@ func (s service) EditNews(ctx context.Context, news *pb.News) (res *emptypb.Empt
 }
 
 func (s service) DeleteNews(ctx context.Context, selectNews *pb.Select) (res *emptypb.Empty, err error) {
+	const funcName = `DeleteNews`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	_ = s.repo.CacheReadWriter.UnsetNews(ctx, selectNews.Id)
 	err = s.repo.ReadWriter.RemoveNews(ctx, selectNews)
 	if err != nil {
@@ -45,7 +57,11 @@ func (s service) DeleteNews(ctx context.Context, selectNews *pb.Select) (res *em
 	return nil, s.repo.CacheReadWriter.InvalidateNewses(ctx)
 }
 
-func (s service) filterRedisKeyGenerator(filters *pb.Filters) (res string) {
+func (s service) filterRedisKeyGenerator(ctx context.Context, filters *pb.Filters) (res string) {
+	const funcName = `filterRedisKeyGenerator`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	if filters.TopicId != "" && filters.Status != 0 {
 		res = fmt.Sprintf("topic_id_status_%s_%d", filters.TopicId, filters.Status)
 	} else if filters.Status != 0 {
@@ -59,7 +75,11 @@ func (s service) filterRedisKeyGenerator(filters *pb.Filters) (res string) {
 }
 
 func (s service) GetNewses(ctx context.Context, filters *pb.Filters) (res *pb.Newses, err error) {
-	filterValue := s.filterRedisKeyGenerator(filters)
+	const funcName = `GetNewses`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
+	filterValue := s.filterRedisKeyGenerator(ctx, filters)
 	if reload := s.repo.CacheReadWriter.ReloadRequired(ctx, filterValue); reload {
 		_ = s.repo.CacheReadWriter.SetFilter(ctx, filterValue)
 		if filters.TopicId != "" && filters.Status != 0 {
@@ -71,9 +91,11 @@ func (s service) GetNewses(ctx context.Context, filters *pb.Filters) (res *pb.Ne
 		} else if filters.TopicId == "" && filters.Status == 0 {
 			res, err = s.repo.ReadWriter.ReadNewses(ctx)
 		}
-		err = s.repo.CacheReadWriter.ReloadNewses(ctx, res)
-		if err != nil {
-			return nil, err
+		if res != nil{
+			err = s.repo.CacheReadWriter.ReloadNewses(ctx, res)
+			if err != nil {
+				return nil, err
+			}
 		}
 		fmt.Println("database")
 		return res, nil

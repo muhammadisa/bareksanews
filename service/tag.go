@@ -10,6 +10,10 @@ import (
 )
 
 func (s service) AddTag(ctx context.Context, tag *pb.Tag) (res *emptypb.Empty, err error) {
+	const funcName = `AddTag`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	tag.Id = uuid.NewV4().String()
 	newTag, err := s.repo.ReadWriter.WriteTag(ctx, tag)
 	if err != nil {
@@ -19,6 +23,10 @@ func (s service) AddTag(ctx context.Context, tag *pb.Tag) (res *emptypb.Empty, e
 }
 
 func (s service) EditTag(ctx context.Context, tag *pb.Tag) (res *emptypb.Empty, err error) {
+	const funcName = `EditTag`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	err = s.repo.CacheReadWriter.UnsetTag(ctx, tag.Id)
 	if err != nil {
 		return nil, err
@@ -31,6 +39,10 @@ func (s service) EditTag(ctx context.Context, tag *pb.Tag) (res *emptypb.Empty, 
 }
 
 func (s service) DeleteTag(ctx context.Context, selectTag *pb.Select) (res *emptypb.Empty, err error) {
+	const funcName = `DeleteTag`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	err = s.repo.ReadWriter.RemoveTag(ctx, selectTag)
 	if err != nil {
 		return nil, err
@@ -43,6 +55,10 @@ func (s service) DeleteTag(ctx context.Context, selectTag *pb.Select) (res *empt
 }
 
 func (s service) GetTags(ctx context.Context, _ *emptypb.Empty) (res *pb.Tags, err error) {
+	const funcName = `GetTags`
+	_, span := s.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	res, err = s.repo.CacheReadWriter.GetTags(ctx)
 	if err != nil {
 		return nil, err

@@ -9,6 +9,7 @@ import (
 	pb "github.com/muhammadisa/bareksanews/protoc/api/v1"
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/suite"
+	"go.opencensus.io/trace"
 	"testing"
 	"time"
 )
@@ -24,7 +25,7 @@ func TestCacheTopicTestSuite(t *testing.T) {
 func (ts *cacheTopicTestSuite) TestReloadTopics() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -78,7 +79,7 @@ func (ts *cacheTopicTestSuite) TestReloadTopics() {
 func (ts *cacheTopicTestSuite) TestGetTopics() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -134,7 +135,7 @@ func (ts *cacheTopicTestSuite) TestGetTopics() {
 func (ts *cacheTopicTestSuite) TestUnsetTopic() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -179,7 +180,7 @@ func (ts *cacheTopicTestSuite) TestUnsetTopic() {
 func (ts *cacheTopicTestSuite) TestSetTopic() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 	now := time.Now()
 
 	tests := []struct {

@@ -3,6 +3,7 @@ package sql
 import (
 	"context"
 	"errors"
+	"go.opencensus.io/trace"
 	"testing"
 	"time"
 
@@ -48,7 +49,7 @@ func (ts *sqlTagTestSuite) TestReadTags() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -115,7 +116,7 @@ func (ts *sqlTagTestSuite) TestRemoveTag() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -183,7 +184,7 @@ func (ts *sqlTagTestSuite) TestModifyTag() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	currentDate := mocker.AnyTime{}
 	ctx := context.Background()
@@ -259,7 +260,7 @@ func (ts *sqlTagTestSuite) TestWriteTag() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	currentDate := mocker.AnyTime{}
 	ctx := context.Background()

@@ -3,6 +3,7 @@ package sql
 import (
 	"context"
 	"errors"
+	"go.opencensus.io/trace"
 	"testing"
 	"time"
 
@@ -49,7 +50,7 @@ func (ts *sqlTopicTestSuite) TestReadTopics() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -116,7 +117,7 @@ func (ts *sqlTopicTestSuite) TestRemoveTopic() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -186,7 +187,7 @@ func (ts *sqlTopicTestSuite) TestModifyTopic() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	currentDate := mocker.AnyTime{}
 	ctx := context.Background()
@@ -265,7 +266,7 @@ func (ts *sqlTopicTestSuite) TestWriteTopic() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	currentDate := mocker.AnyTime{}
 	ctx := context.Background()

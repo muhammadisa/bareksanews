@@ -8,6 +8,7 @@ import (
 	"github.com/muhammadisa/bareksanews/util/mocker"
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/suite"
+	"go.opencensus.io/trace"
 	"testing"
 	"time"
 )
@@ -61,7 +62,7 @@ func (ts *sqlNewsTestSuite) TestReadNewsesByStatusAndTopicID() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -141,7 +142,7 @@ func (ts *sqlNewsTestSuite) TestReadNewsesByTopicID() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -221,7 +222,7 @@ func (ts *sqlNewsTestSuite) TestReadNewsesByStatus() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -301,7 +302,7 @@ func (ts *sqlNewsTestSuite) TestReadNewses() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -367,7 +368,7 @@ func (ts *sqlNewsTestSuite) TestRemoveNews() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	ctx := context.Background()
 	defer ctx.Done()
@@ -437,7 +438,7 @@ func (ts *sqlNewsTestSuite) TestModifyNews() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	currentDate := mocker.AnyTime{}
 	ctx := context.Background()
@@ -517,7 +518,7 @@ func (ts *sqlNewsTestSuite) TestWriteNews() {
 		},
 	}
 
-	repository := &readWrite{db: mockDB}
+	repository := &readWrite{db: mockDB, tracer: trace.DefaultTracer}
 	errorDummy := errors.New("sql error while executing query")
 	currentDate := mocker.AnyTime{}
 	ctx := context.Background()

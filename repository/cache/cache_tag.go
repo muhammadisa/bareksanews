@@ -9,6 +9,10 @@ import (
 )
 
 func (c *cache) ReloadTags(ctx context.Context, tags *pb.Tags) (err error) {
+	const funcName = `ReloadTags`
+	_, span := c.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	data := make(map[string]interface{})
 	for _, tag := range tags.Tags {
 		tagByte, err := json.Marshal(tag)
@@ -21,10 +25,18 @@ func (c *cache) ReloadTags(ctx context.Context, tags *pb.Tags) (err error) {
 }
 
 func (c *cache) UnsetTag(ctx context.Context, id string) (err error) {
+	const funcName = `UnsetTag`
+	_, span := c.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	return c.redis.HDel(ctx, constant.Tags, id).Err()
 }
 
 func (c *cache) SetTag(ctx context.Context, tag *pb.Tag) (err error) {
+	const funcName = `SetTag`
+	_, span := c.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	tagByte, err := json.Marshal(tag)
 	if err != nil {
 		return err
@@ -33,6 +45,10 @@ func (c *cache) SetTag(ctx context.Context, tag *pb.Tag) (err error) {
 }
 
 func (c *cache) GetTags(ctx context.Context) (res *pb.Tags, err error) {
+	const funcName = `GetTags`
+	_, span := c.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var tags pb.Tags
 	tagsMap := c.redis.HGetAll(ctx, constant.Tags).Val()
 	for _, v := range tagsMap {

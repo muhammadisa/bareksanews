@@ -100,10 +100,10 @@ func main() {
 			Password: "root",
 			Host:     "localhost",
 			Port:     "3306",
-			Name:     "news_bareksa",
+			Name:     "bareksa_news",
 		}
 		repoConf.Cache = dbc.Config{
-			Password: "password",
+			Password: "root",
 			Host:     "localhost",
 			Port:     "6379",
 		}

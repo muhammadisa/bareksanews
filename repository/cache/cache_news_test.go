@@ -6,6 +6,7 @@ import (
 	"github.com/muhammadisa/bareksanews/constant"
 	pb "github.com/muhammadisa/bareksanews/protoc/api/v1"
 	"github.com/stretchr/testify/suite"
+	"go.opencensus.io/trace"
 	"testing"
 )
 
@@ -20,7 +21,7 @@ func TestCacheNewsTestSuite(t *testing.T) {
 func (ts *cacheNewsTestSuite) TestGetFilter() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	mock.ExpectGet(constant.FilterNewses).SetVal("ok")
 
@@ -34,7 +35,7 @@ func (ts *cacheNewsTestSuite) TestGetFilter() {
 func (ts *cacheNewsTestSuite) TestSetFilter() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	mock.ExpectSet(constant.FilterNewses, "filter_1", 0).SetVal("filter_1")
 
@@ -48,7 +49,7 @@ func (ts *cacheNewsTestSuite) TestSetFilter() {
 func (ts *cacheNewsTestSuite) TestUnsetNews() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	mock.ExpectHDel(constant.News, "field_1").SetVal(1)
 
@@ -62,7 +63,7 @@ func (ts *cacheNewsTestSuite) TestUnsetNews() {
 func (ts *cacheNewsTestSuite) TestInvalidateNewses() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	mock.ExpectSet(constant.ReloadNewses, true, 0).SetVal("true")
 
@@ -76,7 +77,7 @@ func (ts *cacheNewsTestSuite) TestInvalidateNewses() {
 func (ts *cacheNewsTestSuite) TestReloadRequired() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	mock.ExpectGet(constant.FilterNewses).SetVal("filter_1")
 	mock.ExpectGet(constant.ReloadNewses).SetVal("0")
@@ -91,7 +92,7 @@ func (ts *cacheNewsTestSuite) TestReloadRequired() {
 func (ts *cacheTagTestSuite) TestGetNewses() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -151,7 +152,7 @@ func (ts *cacheTagTestSuite) TestGetNewses() {
 func (ts *cacheTagTestSuite) TestReloadNewses() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string

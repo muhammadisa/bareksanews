@@ -9,6 +9,7 @@ import (
 	pb "github.com/muhammadisa/bareksanews/protoc/api/v1"
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/suite"
+	"go.opencensus.io/trace"
 	"testing"
 	"time"
 )
@@ -24,7 +25,7 @@ func TestCacheTagTestSuite(t *testing.T) {
 func (ts *cacheTagTestSuite) TestReloadTags() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -77,7 +78,7 @@ func (ts *cacheTagTestSuite) TestReloadTags() {
 func (ts *cacheTagTestSuite) TestGetTags() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -132,7 +133,7 @@ func (ts *cacheTagTestSuite) TestGetTags() {
 func (ts *cacheTagTestSuite) TestUnsetTag() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 
 	tests := []struct {
 		Name      string
@@ -177,7 +178,7 @@ func (ts *cacheTagTestSuite) TestUnsetTag() {
 func (ts *cacheTagTestSuite) TestSetTag() {
 	db, mock := redismock.NewClientMock()
 	ctx := context.Background()
-	redisCache := &cache{redis: db}
+	redisCache := &cache{redis: db, tracer: trace.DefaultTracer}
 	now := time.Now()
 
 	tests := []struct {

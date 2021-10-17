@@ -11,6 +11,10 @@ import (
 )
 
 func (r *readWrite) WriteTopic(ctx context.Context, req *pb.Topic) (res *pb.Topic, err error) {
+	const funcName = `WriteTopic`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	currentTime := time.Now()
 	req.CreatedAt = currentTime.Unix()
 	req.UpdatedAt = currentTime.Unix()
@@ -36,6 +40,10 @@ func (r *readWrite) WriteTopic(ctx context.Context, req *pb.Topic) (res *pb.Topi
 }
 
 func (r *readWrite) ModifyTopic(ctx context.Context, req *pb.Topic) (res *pb.Topic, err error) {
+	const funcName = `ModifyTopic`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var oldTopic model.Topic
 
 	stmt, err := r.db.Prepare(queryLookupCreateAtTopic)
@@ -77,6 +85,10 @@ func (r *readWrite) ModifyTopic(ctx context.Context, req *pb.Topic) (res *pb.Top
 }
 
 func (r *readWrite) RemoveTopic(ctx context.Context, req *pb.Select) error {
+	const funcName = `RemoveTopic`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryRemoveTopic)
 	if err != nil {
 		return err
@@ -95,6 +107,10 @@ func (r *readWrite) RemoveTopic(ctx context.Context, req *pb.Select) error {
 }
 
 func (r *readWrite) ReadTopics(ctx context.Context) (res *pb.Topics, err error) {
+	const funcName = `ReadTopics`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var topics pb.Topics
 	var topic model.Topic
 

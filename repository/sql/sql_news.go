@@ -11,6 +11,10 @@ import (
 )
 
 func (r *readWrite) WriteNews(ctx context.Context, req *pb.News) (res *pb.News, err error) {
+	const funcName = `WriteNews`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	currentTime := time.Now()
 	req.CreatedAt = currentTime.Unix()
 	req.UpdatedAt = currentTime.Unix()
@@ -38,6 +42,10 @@ func (r *readWrite) WriteNews(ctx context.Context, req *pb.News) (res *pb.News, 
 }
 
 func (r *readWrite) ModifyNews(ctx context.Context, req *pb.News) (res *pb.News, err error) {
+	const funcName = `ModifyNews`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var oldNews model.News
 	stmt, err := r.db.Prepare(queryLookupCreateAtNews)
 	if err != nil {
@@ -80,6 +88,10 @@ func (r *readWrite) ModifyNews(ctx context.Context, req *pb.News) (res *pb.News,
 }
 
 func (r *readWrite) RemoveNews(ctx context.Context, req *pb.Select) error {
+	const funcName = `RemoveNews`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryRemoveNews)
 	if err != nil {
 		return err
@@ -98,6 +110,10 @@ func (r *readWrite) RemoveNews(ctx context.Context, req *pb.Select) error {
 }
 
 func (r *readWrite) rowsNewsesNextAndScan(ctx context.Context, row *sql.Rows) (res *pb.Newses, err error) {
+	const funcName = `rowsNewsesNextAndScan`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var newses pb.Newses
 	var news model.News
 	for row.Next() {
@@ -130,6 +146,10 @@ func (r *readWrite) rowsNewsesNextAndScan(ctx context.Context, row *sql.Rows) (r
 }
 
 func (r *readWrite) ReadNewsesByStatusAndTopicID(ctx context.Context, status int32, topicID string) (res *pb.Newses, err error) {
+	const funcName = `ReadNewsesByStatusAndTopicID`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryReadNewsesByStatusAndTopicID)
 	if err != nil {
 		return res, err
@@ -144,6 +164,10 @@ func (r *readWrite) ReadNewsesByStatusAndTopicID(ctx context.Context, status int
 }
 
 func (r *readWrite) ReadNewsesByTopicID(ctx context.Context, topicID string) (res *pb.Newses, err error) {
+	const funcName = `ReadNewsesByTopicID`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryReadNewsesByTopicID)
 	if err != nil {
 		return res, err
@@ -158,6 +182,10 @@ func (r *readWrite) ReadNewsesByTopicID(ctx context.Context, topicID string) (re
 }
 
 func (r *readWrite) ReadNewsesByStatus(ctx context.Context, status int32) (res *pb.Newses, err error) {
+	const funcName = `ReadNewsesByStatus`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryReadNewsesByStatus)
 	if err != nil {
 		return res, err
@@ -172,6 +200,10 @@ func (r *readWrite) ReadNewsesByStatus(ctx context.Context, status int32) (res *
 }
 
 func (r *readWrite) ReadNewses(ctx context.Context) (res *pb.Newses, err error) {
+	const funcName = `ReadNewses`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryReadNewses)
 	if err != nil {
 		return res, err

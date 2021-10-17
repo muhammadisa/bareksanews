@@ -11,6 +11,10 @@ import (
 )
 
 func (r *readWrite) RemoveNewsTagsByNewsID(ctx context.Context, req *pb.Select) error {
+	const funcName = `RemoveNewsTagsByNewsID`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	stmt, err := r.db.Prepare(queryRemoveNewsTagsByNewsID)
 	if err != nil {
 		return err
@@ -29,6 +33,10 @@ func (r *readWrite) RemoveNewsTagsByNewsID(ctx context.Context, req *pb.Select) 
 }
 
 func (r *readWrite) ReadNewsTagsTagIDAndTagByNewsID(ctx context.Context, newsID string, all bool) (res []string) {
+	const funcName = `ReadNewsTagsTagIDAndTagByNewsID`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	var tagID, tag string
 	stmt, err := r.db.Prepare(queryReadNewsTags)
 	if err != nil {
@@ -58,6 +66,10 @@ func (r *readWrite) ReadNewsTagsTagIDAndTagByNewsID(ctx context.Context, newsID 
 }
 
 func (r *readWrite) WriteNewsTags(ctx context.Context, newsID string, tagIDs []string, new bool) error {
+	const funcName = `WriteNewsTags`
+	_, span := r.tracer.StartSpan(ctx, funcName)
+	defer span.End()
+
 	timeNow := time.Now()
 	length := len(tagIDs)
 
