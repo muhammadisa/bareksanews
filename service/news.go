@@ -3,12 +3,14 @@ package service
 import (
 	"context"
 	"fmt"
+	uuid "github.com/satori/go.uuid"
 
 	pb "github.com/muhammadisa/bareksanews/protoc/api/v1"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (s service) AddNews(ctx context.Context, news *pb.News) (res *emptypb.Empty, err error) {
+	news.Id = uuid.NewV4().String()
 	newNews, err := s.repo.ReadWriter.WriteNews(ctx, news)
 	if err != nil {
 		return nil, err

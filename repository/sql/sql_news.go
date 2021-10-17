@@ -8,12 +8,10 @@ import (
 
 	"github.com/muhammadisa/bareksanews/model"
 	pb "github.com/muhammadisa/bareksanews/protoc/api/v1"
-	uuid "github.com/satori/go.uuid"
 )
 
 func (r *readWrite) WriteNews(ctx context.Context, req *pb.News) (res *pb.News, err error) {
 	currentTime := time.Now()
-	req.Id = uuid.NewV4().String()
 	req.CreatedAt = currentTime.Unix()
 	req.UpdatedAt = currentTime.Unix()
 	stmt, err := r.db.Prepare(queryWriteNews)
