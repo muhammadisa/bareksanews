@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	_interface "github.com/muhammadisa/bareksanews/repository/interface"
-	"github.com/muhammadisa/barektest-util/dbc"
+	"github.com/muhammadisa/bareksanews/util/dbc"
 	"go.opencensus.io/trace"
 )
 

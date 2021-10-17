@@ -3,7 +3,7 @@ package cache
 import (
 	"github.com/go-redis/redis/v8"
 	_interface "github.com/muhammadisa/bareksanews/repository/interface"
-	"github.com/muhammadisa/barektest-util/dbc"
+	"github.com/muhammadisa/bareksanews/util/dbc"
 	"go.opencensus.io/trace"
 )
 

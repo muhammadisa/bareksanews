@@ -6,7 +6,7 @@ import (
 	"github.com/muhammadisa/bareksanews/repository/cache"
 	_interface "github.com/muhammadisa/bareksanews/repository/interface"
 	"github.com/muhammadisa/bareksanews/repository/sql"
-	"github.com/muhammadisa/barektest-util/dbc"
+	"github.com/muhammadisa/bareksanews/util/dbc"
 	"go.opencensus.io/trace"
 )
 

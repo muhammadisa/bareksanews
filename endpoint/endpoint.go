@@ -6,7 +6,7 @@ import (
 	kitoc "github.com/go-kit/kit/tracing/opencensus"
 	"github.com/muhammadisa/bareksanews/constant"
 	_interface "github.com/muhammadisa/bareksanews/service/interface"
-	"github.com/muhammadisa/barektest-util/mw"
+	"github.com/muhammadisa/bareksanews/util/mw"
 )
 
 type BareksaNewsEndpoint struct {
