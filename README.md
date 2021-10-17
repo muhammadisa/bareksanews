@@ -35,5 +35,6 @@ This service used for news, tag, topic management for newses about bareksa
 - move to prerequisite directory in this project
 - then docker-compose up -d
 - then go run main.go server live in 8010 port
+- postman collection inside prerequisite directory
 
 ###### Bareksanews Service
