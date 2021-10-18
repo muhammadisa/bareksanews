@@ -114,12 +114,12 @@ func main() {
 		panic(err)
 	}
 
-	tagRepo, err := repository.NewRepository(ctx, repoConf, trcr)
+	repo, err := repository.NewRepository(ctx, repoConf, trcr)
 	if err != nil {
 		panic(err)
 	}
 
-	bareksaNewsEp, err := ep.NewBareksaNewsEndpoint(service.NewUsecases(*tagRepo, trcr), gvars.Log)
+	bareksaNewsEp, err := ep.NewBareksaNewsEndpoint(service.NewUsecases(*repo, trcr), gvars.Log)
 	if err != nil {
 		panic(err)
 	}

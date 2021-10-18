@@ -92,10 +92,7 @@ func (s service) GetNewses(ctx context.Context, filters *pb.Filters) (res *pb.Ne
 			res, err = s.repo.ReadWriter.ReadNewses(ctx)
 		}
 		if res != nil{
-			err = s.repo.CacheReadWriter.ReloadNewses(ctx, res)
-			if err != nil {
-				return nil, err
-			}
+			_ = s.repo.CacheReadWriter.ReloadNewses(ctx, res)
 		}
 		fmt.Println("database")
 		return res, nil

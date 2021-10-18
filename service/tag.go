@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"fmt"
-
 	pb "github.com/muhammadisa/bareksanews/protoc/api/v1"
 	uuid "github.com/satori/go.uuid"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -69,10 +68,7 @@ func (s service) GetTags(ctx context.Context, _ *emptypb.Empty) (res *pb.Tags, e
 		if err != nil {
 			return nil, err
 		}
-		err = s.repo.CacheReadWriter.ReloadTags(ctx, res)
-		if err != nil {
-			return nil, err
-		}
+		_ = s.repo.CacheReadWriter.ReloadTags(ctx, res)
 		return res, nil
 	}
 	fmt.Println("from cache")

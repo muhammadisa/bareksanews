@@ -61,7 +61,7 @@ func (s service) GetTopics(ctx context.Context, _ *emptypb.Empty) (res *pb.Topic
 
 	res, err = s.repo.CacheReadWriter.GetTopics(ctx)
 	if err != nil {
-		return nil, err
+		return nil, nil
 	}
 	if len(res.Topics) == 0 {
 		fmt.Println("from database")
@@ -69,10 +69,7 @@ func (s service) GetTopics(ctx context.Context, _ *emptypb.Empty) (res *pb.Topic
 		if err != nil {
 			return nil, err
 		}
-		err = s.repo.CacheReadWriter.ReloadTopics(ctx, res)
-		if err != nil {
-			return nil, err
-		}
+		_ = s.repo.CacheReadWriter.ReloadTopics(ctx, res)
 		return res, nil
 	}
 	fmt.Println("from cache")
